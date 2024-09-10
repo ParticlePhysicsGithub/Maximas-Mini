@@ -38,13 +38,15 @@ def mainloop():
     global username, temp_sysraise, currcol, whitelist, credits
     com = ""
 
+    nocreds = False
+    
     ee_mcp_n = 0
 
     multip = 1
 
     print(
         color_map[currcol] +
-        f"Welcome to Maximas Mini!\nType help for help.\nAlso, you need 1 credit per command (this goes up).\nTo get credits, type mon [number 1 to 3].\nIf credits reach zero, then a dice will be rolled for how many credits you get.\nYou can also type quit to quit.\nNote: Errors also take credits.\nThere is no oh-no-you-messed-up coin return system. (unless it is a bug)"
+        f"Welcome to Maximas Mini!\nType help for help.\nAlso, you need 1 credit per command (this goes up, and you can type 'udo nocreds' to disable it.).\nTo get credits, type mon [number 1 to 3].\nIf credits reach zero, then a dice will be rolled for how many credits you get.\nYou can also type quit to quit.\nNote: Errors also take credits.\nThere is no oh-no-you-messed-up coin return system. (unless it is a bug)"
     )
 
     # Open the shelve database
@@ -65,7 +67,11 @@ def mainloop():
         if credits > 0:
 
             try:
-                print(color_map['yellow'] + f"🪙  {credits} ✖️  {multip}")
+                if nocreds == False:
+                    print(color_map['yellow'] + f"🪙  {credits} ✖️  {multip}")
+                else:
+                    credits = 999999999
+                    multip = 1
                 com = input(color_map[currcol] +
                             f"maximas mini | {username} | > " +
                             color_map[currcol])
@@ -185,6 +191,13 @@ def mainloop():
                             db['username'] = username
                     elif first_arg == "color":
                         currcol = sec_arg
+                    elif first_arg == "nocreds":
+                        if nocreds == False:
+                            nocreds = True
+                        elif nocreds == True:
+                            nocreds = False
+                            credits = 10
+                            multip = 1
                     else:
                         print(
                             Fore.RED +
@@ -215,6 +228,10 @@ def mainloop():
                 )
                 print(Fore.LIGHTGREEN_EX +
                       "  - clear: Clears the terminal screen.")
+                print(Fore.LIGHTGREEN_EX +
+                      "  - udo nocreds: Toggles if the credit system is being used.")
+                print(Fore.LIGHTGREEN_EX +
+                      "  - invoke [com]: Runs a shell command. Only works in Windows.")
                 print(
                     Fore.LIGHTGREEN_EX +
                     "  - math [expression]: Evaluates a mathematical expression. Example: `math 2 + 3 * 4`."
@@ -231,6 +248,14 @@ def mainloop():
                     os.system('cls')
                 else:
                     os.system('clear')
+            elif init_arg == "rand":
+                try:
+                    first_arg = int(first_arg)
+                    sec_arg = int(sec_arg)
+                    print(color_map[currcol] + f"🌙 Result: {random.randint(first_arg, sec_arg)}")
+                except ValueError:
+                    print(Fore.RED + "🌸 maximas says: hey, you gave an improper input! (spec: non-integer values; raised by: rand)")
+
             elif init_arg == "math":
                 if len(firstelse_args) > 0:
                     try:
