@@ -231,6 +231,8 @@ def mainloop():
                 print(Fore.LIGHTGREEN_EX +
                       "  - udo nocreds: Toggles if the credit system is being used.")
                 print(Fore.LIGHTGREEN_EX +
+                      "  - rand [a] [b]: Generates a random number from a to b.")
+                print(Fore.LIGHTGREEN_EX +
                       "  - invoke [com]: Runs a shell command. Only works in Windows.")
                 print(
                     Fore.LIGHTGREEN_EX +
