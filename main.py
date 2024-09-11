@@ -4,6 +4,7 @@ import shelve
 import platform
 import subprocess
 import random
+import statistics
 
 colorama.init(autoreset=True)
 
@@ -12,6 +13,8 @@ username = "nil"
 temp_sysraise = 0
 currcol = "white"
 credits = 10
+user_biotext = "...write your bio..."
+user_defcolor = Fore.WHITE
 
 whitelist = ["quit", "help", "clear", "specs"]
 
@@ -35,7 +38,7 @@ color_map = {
 
 
 def mainloop():
-    global username, temp_sysraise, currcol, whitelist, credits
+    global username, temp_sysraise, currcol, whitelist, credits, user_biotext, user_defcolor
     com = ""
 
     nocreds = False
@@ -52,8 +55,10 @@ def mainloop():
     # Open the shelve database
     with shelve.open('user_data') as db:
         # Load username if it exists in the database
-        if 'username' in db:
+        if 'username' in db and 'bio' in db and 'defcol' in db:
             username = db['username']
+            user_biotext = db['bio']
+            currcol = color_map.keys[db['defcol']]
 
     credits = 10
 
@@ -231,15 +236,24 @@ def mainloop():
                 print(Fore.LIGHTGREEN_EX +
                       "  - udo nocreds: Toggles if the credit system is being used.")
                 print(Fore.LIGHTGREEN_EX +
-                      "  - rand [a] [b]: Generates a random number from a to b.")
-                print(Fore.LIGHTGREEN_EX +
                       "  - invoke [com]: Runs a shell command. Only works in Windows.")
+                print(Fore.LIGHTGREEN_EX +
+                      "  - sortlist [gtrlst|lslst] [nodupli|yesdupli] [numbers]: Sorts a list of numbers.\n"
+                      "     * gtrlst: Sorts numbers in ascending order (small to large).\n"
+                      "     * lslst: Sorts numbers in descending order (large to small).\n"
+                      "     * nodupli: Removes duplicate numbers from the list before sorting.\n"
+                      "     * yesdupli: Keeps duplicate numbers in the list during sorting.\n"
+                      "     Example: `sortlist gtrlst nodupli 5 2 3 2 4` will return `2 3 4 5`.\n"
+                      "     Example: `sortlist lslst yesdupli 5 2 3 2 4` will return `5 4 3 2 2`."
+                )
                 print(
                     Fore.LIGHTGREEN_EX +
                     "  - math [expression]: Evaluates a mathematical expression. Example: `math 2 + 3 * 4`."
                 )
                 print(Fore.LIGHTGREEN_EX +
                       "  - help: Displays this help message.")
+                print(Fore.LIGHTGREEN_EX +
+                      "  - rand [a] [b]: Picks a random number from a to b.")
                 print(Fore.LIGHTGREEN_EX + "  - quit: Exits the program.")
                 print(Fore.LIGHTGREEN_EX +
                       "  - specs: Shows findable system specs.")
@@ -257,6 +271,67 @@ def mainloop():
                     print(color_map[currcol] + f"🌙 Result: {random.randint(first_arg, sec_arg)}")
                 except ValueError:
                     print(Fore.RED + "🌸 maximas says: hey, you gave an improper input! (spec: non-integer values; raised by: rand)")
+            elif init_arg == "sortlist":
+                try:
+                    # Ensure there are at least two arguments (sort type and dupli flag)
+                    if len(firstelse_args) < 3:
+                        print(Fore.RED + "🌸 maximas says: hey, you gave an improper input! (spec: missing arguments; raised by: sortlist)")
+                        continue
+
+                    # Extract sorting type (gtrlst/lslst) and duplication flag (nodupli/yesdupli)
+                    sort_type = firstelse_args[0]
+                    dupli_flag = firstelse_args[1]
+
+                    # Remaining arguments are the numbers
+                    number_args = firstelse_args[2:]
+
+                    # Validate numbers
+                    numbers = []
+                    for arg in number_args:
+                        try:
+                            numbers.append(int(arg))
+                        except ValueError:
+                            print(Fore.RED + f"🌸 maximas says: hey, you gave an improper input! (spec: invalid number '{arg}'; raised by: sortlist)")
+                            continue
+
+                    # Handle duplicates based on flag
+                    if dupli_flag == "nodupli":
+                        numbers = list(set(numbers))  # Remove duplicates
+                    elif dupli_flag != "yesdupli":
+                        print(Fore.RED + "🌸 maximas says: hey, you gave an improper input! (spec: invalid flag, use 'nodupli' or 'yesdupli'; raised by: sortlist)")
+                        continue
+
+                    # Sort numbers
+                    if sort_type == "gtrlst":
+                        sorted_list = sorted(numbers)  # Ascending order
+                    elif sort_type == "lslst":
+                        sorted_list = sorted(numbers, reverse=True)  # Descending order
+                    else:
+                        print(Fore.RED + "🌸 maximas says: hey, you gave an improper input! (spec: invalid sort type, use 'gtrlst' or 'lslst'; raised by: sortlist)")
+                        continue
+
+                    # Display sorted list
+                    print(Fore.LIGHTGREEN_EX + "🔢 Sorted list: " + Fore.WHITE + " ".join(map(str, sorted_list)))
+
+                    # Calculate and display statistics
+                    if len(numbers) > 0:
+                        mean_value = statistics.mean(numbers)
+                        median_value = statistics.median(numbers)
+                        range_value = max(numbers) - min(numbers)
+                        try:
+                            mode_value = statistics.mode(numbers)
+                        except statistics.StatisticsError:
+                            mode_value = "No unique mode"
+
+                        print(Fore.LIGHTCYAN_EX + f"📊 Mean: {mean_value}")
+                        print(Fore.LIGHTCYAN_EX + f"📊 Median: {median_value}")
+                        print(Fore.LIGHTCYAN_EX + f"📊 Range: {range_value}")
+                        print(Fore.LIGHTCYAN_EX + f"📊 Mode: {mode_value}")
+                    else:
+                        print(Fore.RED + "🌸 maximas says: hey, the list is empty after processing; raised by: sortlist")
+
+                except Exception as e:
+                    print(Fore.RED + f"🌸 maximas says: Unexpected error: {e}; raised by: sortlist")
 
             elif init_arg == "math":
                 if len(firstelse_args) > 0:
@@ -277,7 +352,6 @@ def mainloop():
                             Fore.RED +
                             f"🌸 maximas says: hey, you gave an improper input! (spec: {e}; raised by: math)"
                         )
-
             elif com != "quit":
                 temp_sysraise = 1
                 print(
