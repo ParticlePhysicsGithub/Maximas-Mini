@@ -21,13 +21,9 @@ INVOKE
 
 QUIT
 
-To come in 0.0.2pre:
----
-PROFILE
-
 SORTLIST
 
-And for 0.0.2...
+For 0.0.2...
 ---
 Dash Notation (ex &-sort -g -y 12 3 4)
 
