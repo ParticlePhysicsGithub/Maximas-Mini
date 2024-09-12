@@ -23,15 +23,18 @@ QUIT
 
 SORTLIST
 
-For 0.0.2...
+TIME
+
+NOTES
+
+DARE
+
+For 0.0.3...
 ---
 Dash Notation (ex &-sort -g -y 12 3 4)
 
-TIME
-
 MAXVER
 
-NOTES
 
 
 
