@@ -245,6 +245,12 @@ def mainloop():
                 print(Fore.LIGHTGREEN_EX +
                       "  - invoke [com]: Runs a shell command. Only works in Windows.")
                 print(Fore.LIGHTGREEN_EX +
+                      "  - time: gives the time")
+                print(Fore.LIGHTGREEN_EX +
+                      "  - dare [easy|medium|hard|extreme]: Gives a dare.")
+                print(Fore.LIGHTGREEN_EX +
+                      "  - notes [see|make] [name] [text]: makes or views notes.")
+                print(Fore.LIGHTGREEN_EX +
                       "  - sortlist [gtrlst|lslst] [nodupli|yesdupli] [numbers]: Sorts a list of numbers.\n"
                       "     * gtrlst: Sorts numbers in ascending order (small to large).\n"
                       "     * lslst: Sorts numbers in descending order (large to small).\n"
