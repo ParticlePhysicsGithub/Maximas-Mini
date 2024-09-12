@@ -5,6 +5,7 @@ import platform
 import subprocess
 import random
 import statistics
+import datetime
 
 colorama.init(autoreset=True)
 
@@ -16,7 +17,7 @@ credits = 10
 user_biotext = "...write your bio..."
 user_defcolor = Fore.WHITE
 
-whitelist = ["quit", "help", "clear", "specs"]
+whitelist = ["quit", "help", "clear", "specs", "time"]
 
 color_map = {
     "red": Fore.RED,
@@ -101,6 +102,7 @@ def mainloop():
 
             first_arg = args[1] if len(args) > 1 else ""
             sec_arg = args[2] if len(args) > 2 else ""
+            tri_arg = args[3] if len(args) > 3 else ""
             firstelse_args = args[1:]
             else_args = args[2:] if len(args) > 2 else []
 
@@ -135,6 +137,11 @@ def mainloop():
                         Fore.RED +
                         "🌸 maximas says: hey, you gave an improper input! (spec: invalid number; raised by: mon)"
                     )
+            
+
+            elif init_arg == "time":
+                print(color_map[currcol] + f"⌚ the time is {str(datetime.datetime.now().time())}")
+
 
             elif init_arg == "echo":
                 try:
@@ -332,8 +339,73 @@ def mainloop():
 
                 except Exception as e:
                     print(Fore.RED + f"🌸 maximas says: Unexpected error: {e}; raised by: sortlist")
+            elif init_arg == "notes":
+                if first_arg == "see":
+                    with shelve.open('notes') as db:
+                        try:
+                            print(color_map[currcol] + db[sec_arg])
+                        except KeyError:
+                            print(Fore.RED + f"🌸 maximas says: note '{sec_arg}' not found.")
+                elif first_arg == "make":
+                    with shelve.open('notes') as db:
+                        db[sec_arg] = ' '.join(else_args[1:])
+                        print(color_map[currcol] + f"🌸 maximas says: note '{sec_arg}' created.")
+            elif init_arg == "dare":
+                category = first_arg.strip().lower()
+                
+                
+                dares = {
+                    "easy": [
+                        "Dance to a song for 1 minute.",
+                        "Try a new food or snack.",
+                        "Sing your favorite song out loud.",
+                        "Do 10 jumping jacks.",
+                        "Speak in an accent for the next 10 minutes.",
+                        "Post a positive comment on a social media post.",
+                        "Do a random act of kindness for someone.",
+                        "Try a new exercise for 5 minutes."
+                    ],
+                    "medium": [
+                        "Call a friend and sing Happy Birthday to them.",
+                        "Post an embarrassing photo on social media (only if you're comfortable with it).",
+                        "Try a new hobby or craft project for 30 minutes.",
+                        "Read a random page from a book aloud to someone.",
+                        "Send a message to an old friend and reconnect.",
+                        "Wear a funny outfit for the next hour.",
+                        "Cook a meal using a recipe you’ve never tried before.",
+                        "Take a 30-minute walk in a new part of town."
+                    ],
+                    "hard": [
+                        "Perform a short skit or monologue in front of a group.",
+                        "Wear your clothes backward for the rest of the day.",
+                        "Take a cold shower for 2 minutes.",
+                        "Try a complex recipe you’ve never made before.",
+                        "Write and perform a short poem or rap.",
+                        "Spend an hour doing a physical activity you dislike.",
+                        "Organize a small event or gathering for friends or family.",
+                        "Try a new sport or physical challenge."
+                    ],
+                    "extreme": [
+                        "Do a public speech or presentation on a random topic.",
+                        "Spend 24 hours without using any electronic devices.",
+                        "Run or walk a 5k (or equivalent distance) without stopping.",
+                        "Volunteer for a cause you’re unfamiliar with for a day.",
+                        "Try a daring adventure activity like skydiving or bungee jumping (if available).",
+                        "Commit to a week-long challenge like a diet or fitness goal.",
+                        "Participate in a local competition or event.",
+                        "Take a solo trip to a new city or country."
+                    ]
+                }
+                
+                if category not in dares:
+                    return "🌸 maximas says: invalid category. Please choose from 'easy', 'medium', 'hard', or 'extreme'."
+                
+                print(color_map[currcol] + random.choice(dares[category]))
 
+            
+                
             elif init_arg == "math":
+                
                 if len(firstelse_args) > 0:
                     try:
                         # Evaluate the expression
