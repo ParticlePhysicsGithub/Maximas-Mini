@@ -17,7 +17,7 @@ credits = 10
 user_biotext = "...write your bio..."
 user_defcolor = Fore.WHITE
 
-whitelist = ["quit", "help", "clear", "specs", "time"]
+whitelist = ["quit", "help", "clear", "specs", "time", "solve"]
 
 color_map = {
     "red": Fore.RED,
@@ -48,6 +48,7 @@ def mainloop():
 
     multip = 1
 
+    icode = ""
     print(
         color_map[currcol] +
         f"Welcome to Maximas Mini!\nType help for help.\nAlso, you need 1 credit per command (this goes up, and you can type 'udo nocreds' to disable it.).\nTo get credits, type mon [number 1 to 3].\nIf credits reach zero, then a dice will be rolled for how many credits you get.\nYou can also type quit to quit.\nNote: Errors also take credits.\nThere is no oh-no-you-messed-up coin return system. (unless it is a bug)"
@@ -277,7 +278,23 @@ def mainloop():
                     os.system('cls')
                 else:
                     os.system('clear')
+            elif init_arg == "lock":
+                # Clear the terminal using os.system('clear') or os.system('cls')
+                import os
+                if platform.system() == "Windows":
+                    os.system('cls')
+                else:
+                    os.system('clear')
 
+                while icode != first_arg:
+                    icode = input("Maximas is locked. Type the lock key to unlock: ")
+                    if icode != first_arg:
+                        print("Incorrect code.")
+
+                if platform.system() == "Windows":
+                    os.system('cls')
+                else:
+                    os.system('clear')
             elif init_arg == "tnttest":
                 def calculate_blast_radius(mass_g):
                     # Convert mass from grams to kilograms
@@ -294,7 +311,40 @@ def mainloop():
                 mass = float(first_arg)
                 radius = calculate_blast_radius(mass)
                 print(f"💥 the estimated blast radius for {mass} grams of TNT is approximately {radius:.2f} meters.")
+            elif init_arg == "solve":
+                # Generate two random numbers between 1 and 100
+                num1 = random.randint(1, 100)
+                num2 = random.randint(1, 100)
+                
+                # Randomly choose an operation: +, -, *, or /
+                operation = random.choice(['+', '-', '*', '/'])
+                
+                # Create the math problem based on the chosen operation
+                if operation == '+':
+                    correct_answer = num1 + num2
+                    question = f"{num1} + {num2}"
+                elif operation == '-':
+                    correct_answer = num1 - num2
+                    question = f"{num1} - {num2}"
+                elif operation == '*':
+                    correct_answer = num1 * num2
+                    question = f"{num1} * {num2}"
+                else:  # For division, ensure no division by zero
+                    num2 = random.randint(1, 10)  # Limit the divisor to a smaller number for simplicity
+                    correct_answer = round(num1 / num2, 2)  # Round the result to 2 decimal places
+                    question = f"{num1} / {num2}"
 
+                # Ask the user for their answer
+                user_answer = input(color_map[currcol] + f"solve: {question} = ")
+
+                # Check if the user's answer is correct
+                try:
+                    if float(user_answer) == correct_answer:
+                        print(color_map[currcol] +"🌸 maximas says: correct!")
+                    else:
+                        print(color_map[currcol] +f"🌸 maximas says: incorrect. The correct answer is {correct_answer}.")
+                except ValueError:
+                    print(color_map['red'] + "🌸 maximas says: invalid input. Please enter a number.")
             elif init_arg == "rand":
                 try:
                     first_arg = int(first_arg)
