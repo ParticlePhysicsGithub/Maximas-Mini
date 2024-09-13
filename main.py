@@ -17,7 +17,7 @@ credits = 10
 user_biotext = "...write your bio..."
 user_defcolor = Fore.WHITE
 
-whitelist = ["quit", "help", "clear", "specs", "time", "solve"]
+whitelist = ["quit", "help", "clear", "specs", "time", "solve", "cyoadv"]
 
 color_map = {
     "red": Fore.RED,
@@ -278,6 +278,95 @@ def mainloop():
                     os.system('cls')
                 else:
                     os.system('clear')
+            elif init_arg == "cyoadv":
+                resp = ""
+
+                def askuser(storybef1, storybef2, opt, opt2):
+                    # Ask the user for input and validate it
+                    resp = input(f"{storybef1} {opt} {storybef2} {opt2}?: ")
+                    
+                    if resp == opt or resp == opt2:
+                        return resp
+                    else:
+                        # If invalid input, ask again
+                        print("Invalid choice. Please choose a valid option.")
+                        return askuser(storybef1, storybef2, opt, opt2)
+
+                # Main game logic
+                if askuser("You wake up in a field. Do you go", "or", "right", "left") == "right":
+                    if askuser("You go right. You see a car. Do you", "or do you", "take it", "leave it") == "take it":
+                        if askuser("You drive on a path for a while, and end up in a city. Do you", "or do you", "continue going", "stop somewhere") == "continue going":
+                            if askuser("You see a building labeled 'erebakatta.' You go inside, where they tell you that you are on the planet Kadai. Do you", "or do you", "stay", "leave") == "stay":
+                                # You chose to stay on the planet Kadai
+                                if askuser("They offer you a mysterious device that grants you knowledge of the entire planet. Do you", "or do you", "accept it", "decline it") == "accept it":
+                                    if askuser("You begin exploring Kadai. Do you first explore the cities or the wilderness?", "or do you", "cities", "wilderness") == "cities":
+                                        print("You explore the vast cities of Kadai, learning advanced technology and gaining allies.")
+                                        print("After years of integrating yourself into their society, you rise to a position of great power, shaping the future of the planet.")
+                                        print("Your name becomes legend as the one who brought harmony to Kadai.")
+                                        print("ENDING: Galactic Ambassador.")
+                                    else:
+                                        print("You venture into the wilderness, encountering strange creatures and ancient ruins. You discover forgotten technologies.")
+                                        print("But over time, the wilderness consumes you, and you realize that some mysteries are too dangerous to uncover.")
+                                        print("Eventually, you disappear, your fate unknown to the rest of the world.")
+                                        print("ENDING: Lost Wanderer.")
+                                else:
+                                    print("You decline their offer and leave the building. The city is vast, but without guidance, you struggle to find purpose.")
+                                    print("Eventually, you settle into an ordinary life, but a feeling of missed opportunities haunts you.")
+                                    print("ENDING: Ordinary Life.")
+                            else:
+                                if askuser("You leave the building, but something seems off. Do you explore the city more or head back to the field? Do you: ", "or do you", "explore", "return") == "explore":
+                                    print("As you wander the city, you start noticing that people are watching you. You confront one of them, only to discover that they’re not human.")
+                                    print("Realizing the danger, you try to flee, but it’s too late. You’ve become a target in a dangerous world.")
+                                    print("You disappear, your fate unknown.")
+                                    print("ENDING: Vanished.")
+                                else:
+                                    print("You decide to return to the field, but the path back is not as it was. The landscape shifts and warps around you.")
+                                    print("Eventually, you find yourself back in the field, as if nothing had happened. Was it all a dream?")
+                                    print("ENDING: Full Circle.")
+                        else:
+                            if askuser("You stop at a café in the city. A stranger offers to guide you through Kadai. Do you", "or do you", "trust them", "refuse") == "trust them":
+                                if askuser("The stranger takes you to an underground base. Do you investigate further or escape?", "or do you", "investigate", "escape") == "investigate":
+                                    print("You investigate and discover a secret society aiming to overthrow the government of Kadai.")
+                                    print("With the knowledge you gain, you become a key figure in the rebellion, but the fight is dangerous and full of risks.")
+                                    print("You either win or lose the battle for Kadai's future.")
+                                    print("ENDING: Revolutionary Leader.")
+                                else:
+                                    print("You choose to escape, realizing the situation is too dangerous. As you flee, you find a hidden exit leading back to the field.")
+                                    print("You take one last look at the strange city before leaving, never to return.")
+                                    print("ENDING: Escaped.")
+                            else:
+                                print("You refuse the stranger's offer, continuing to wander the streets alone. Eventually, you find yourself lost.")
+                                print("Without any guidance or resources, you fade into the background, forgotten by the world.")
+                                print("ENDING: Forgotten.")
+                    else:
+                        if askuser("You decide not to take the car. As you walk down the road, you find a small village. Do you", "or do you", "enter", "keep walking") == "enter":
+                            if askuser("The villagers are friendly, but there’s something strange about the place. Do you", "or do you", "investigate", "ignore it") == "investigate":
+                                print("You investigate the village, uncovering dark secrets hidden beneath the surface. The village is part of an experiment.")
+                                print("Before you can escape, you’re caught and become part of the experiment yourself.")
+                                print("ENDING: Experiment Subject.")
+                            else:
+                                print("You decide to ignore your suspicions and stay in the village. Life is peaceful, but you never shake the feeling that something is wrong.")
+                                print("ENDING: Village Life.")
+                        else:
+                            print("You keep walking down the road, eventually reaching a new city. But the road was long and you feel like a different person.")
+                            print("The adventure changes you, but your journey has just begun.")
+                            print("ENDING: Endless Traveler.")
+                else:
+                    if askuser("You turn left and find yourself in a dense forest. Do you", "or do you", "enter the forest", "stay on the road") == "enter the forest":
+                        if askuser("You come across an ancient temple. Do you", "or do you", "go inside", "turn back") == "go inside":
+                            print("Inside the temple, you find ancient relics and mysterious writings. You accidentally activate something and find yourself transported to another dimension.")
+                            print("There, your adventure continues in ways you never imagined.")
+                            print("ENDING: Dimensional Wanderer.")
+                        else:
+                            print("You decide not to enter the temple and continue walking. However, strange things begin to happen, as if the forest itself is alive.")
+                            print("Eventually, you are lost forever in the labyrinthine woods.")
+                            print("ENDING: Lost in the Forest.")
+                    else:
+                        print("You stay on the road, eventually reaching a new city. Life seems normal again, but the memory of that mysterious field haunts you.")
+                        print("ENDING: Full Circle.")
+
+
+
             elif init_arg == "lock":
                 # Clear the terminal using os.system('clear') or os.system('cls')
                 import os
