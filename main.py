@@ -277,6 +277,24 @@ def mainloop():
                     os.system('cls')
                 else:
                     os.system('clear')
+
+            elif init_arg == "tnttest":
+                def calculate_blast_radius(mass_g):
+                    # Convert mass from grams to kilograms
+                    mass_kg = mass_g / 1000.0
+                    
+                    # Proportional constant (adjustable based on empirical data)
+                    k = 0.5
+                    
+                    # Calculate blast radius
+                    radius = k * (mass_kg ** (1/3))
+                    return radius
+
+                # Example usage:
+                mass = float(first_arg)
+                radius = calculate_blast_radius(mass)
+                print(f"💥 the estimated blast radius for {mass} grams of TNT is approximately {radius:.2f} meters.")
+
             elif init_arg == "rand":
                 try:
                     first_arg = int(first_arg)
