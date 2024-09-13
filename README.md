@@ -1,7 +1,7 @@
 # Maximas-Mini
 
 A mini terminal with a bunch of features to come.
-As of 0.0.1b:
+As of 0.0.2c:
 ---
 Credit System (MON)
 
@@ -28,6 +28,12 @@ TIME
 NOTES
 
 DARE
+
+TNTTEST
+
+LOCK
+
+SOLVE
 
 For 0.0.3...
 ---
