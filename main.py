@@ -211,6 +211,117 @@ def mainloop():
                         Fore.WHITE + str(platform.uname()))
                     print(Fore.LIGHTGREEN_EX + "  - platform.version(): " +
                         Fore.WHITE + str(platform.version()))
+                    
+                elif init_arg == "eni":
+                    def number_fact(number):
+                        facts = {
+                            1: "1 is the multiplicative identity, meaning any number multiplied by 1 remains unchanged.",
+                            2: "2 is the smallest and only even prime number.",
+                            3: "3 is the first odd prime number and the second Fibonacci number.",
+                            4: "4 is the only number with the same number of letters as its value in English.",
+                            5: "A starfish typically has 5 arms.",
+                            6: "6 is the smallest perfect number, meaning it's equal to the sum of its divisors (1 + 2 + 3).",
+                            7: "There are 7 continents in the world.",
+                            8: "A byte consists of 8 bits in computing.",
+                            9: "9 is the highest single-digit number and a square number (3 x 3).",
+                            10: "10 is the basis of the decimal system, the most widely used number system in the world.",
+                            11: "11 is the first palindromic prime number.",
+                            12: "12 is the number of months in a year.",
+                            13: "Friday the 13th is considered unlucky in many cultures.",
+                            14: "14 is the number of lines in a sonnet.",
+                            15: "15 is a triangular number, which is the sum of the numbers 1 through 5.",
+                            16: "16 is the number of ounces in a pound.",
+                            17: "17 is the age at which many countries allow individuals to obtain a driver’s license.",
+                            18: "18 is the legal age of adulthood in many countries.",
+                            19: "19 is the atomic number of potassium.",
+                            20: "20 is the number of fingers and toes most humans have.",
+                            21: "21 is the legal drinking age in the United States.",
+                            22: "22 is a palindromic number, meaning it reads the same forward and backward.",
+                            23: "23 is famous for Michael Jordan, who wore this number for most of his basketball career.",
+                            24: "24 is the number of hours in a day.",
+                            25: "Christmas is celebrated on December 25th.",
+                            26: "There are 26 letters in the English alphabet.",
+                            27: "27 is the atomic number of cobalt.",
+                            28: "28 is the number of days in February in common years.",
+                            29: "29 is the number of days in February in a leap year.",
+                            30: "30 is the minimum age for a person to become a U.S. senator.",
+                            31: "31 is the maximum number of days any month can have.",
+                            32: "32 is the freezing point of water in degrees Fahrenheit.",
+                            33: "33 is the atomic number of arsenic.",
+                            34: "34 is the ninth number in the Fibonacci sequence.",
+                            35: "35 is the minimum age for a person to become U.S. president.",
+                            36: "36 is a perfect square (6 x 6).",
+                            37: "37 is the atomic number of rubidium.",
+                            38: "38 is the number of surviving plays written by William Shakespeare.",
+                            39: "39 is the atomic number of yttrium.",
+                            40: "40 is traditionally the number of hours in a workweek.",
+                            41: "41 is a prime number and the atomic number of niobium.",
+                            42: "42 is the answer to life, the universe, and everything in Douglas Adams' book *The Hitchhiker's Guide to the Galaxy*.",
+                            43: "43 is the atomic number of technetium, the first element to be artificially produced.",
+                            44: "44 is the number of U.S. Presidents before Barack Obama, the 44th.",
+                            45: "45 is the speed (in RPM) of a single vinyl record.",
+                            46: "46 is the atomic number of palladium.",
+                            47: "47 is the atomic number of silver.",
+                            48: "48 is the number of contiguous states in the United States.",
+                            49: "49 is a perfect square (7 x 7).",
+                            50: "50 is the number of stars on the U.S. flag.",
+                            51: "Area 51 is a famous U.S. military base that has sparked numerous conspiracy theories.",
+                            52: "There are 52 cards in a standard deck of playing cards.",
+                            53: "53 is the atomic number of iodine.",
+                            54: "54 is the atomic number of xenon.",
+                            55: "55 is the speed limit (in miles per hour) in many parts of the United States.",
+                            56: "56 is the number of signers of the U.S. Declaration of Independence.",
+                            57: "57 varieties of products were advertised by the Heinz Company.",
+                            58: "58 is the atomic number of cerium.",
+                            59: "59 is the number of days Queen Elizabeth II ruled longer than Queen Victoria, making her the longest-reigning British monarch.",
+                            60: "There are 60 seconds in a minute.",
+                            61: "61 is the atomic number of promethium.",
+                            62: "62 is the atomic number of samarium.",
+                            63: "63 is the number of chromosomes in a donkey.",
+                            64: "64 is the number of squares on a chessboard.",
+                            65: "65 is the traditional retirement age in many countries.",
+                            66: "Route 66 is a famous highway in the United States.",
+                            67: "67 is the atomic number of holmium.",
+                            68: "68 is the number of moons discovered orbiting Jupiter so far.",
+                            69: "69 is the atomic number of thulium.",
+                            70: "70 is the number of years in a typical human lifespan according to the Bible.",
+                            71: "71 is the atomic number of lutetium.",
+                            72: "72 is the number of names of God according to Kabbalah.",
+                            73: "73 is Sheldon Cooper's favorite number from *The Big Bang Theory*.",
+                            74: "74 is the atomic number of tungsten.",
+                            75: "75 is the diamond wedding anniversary.",
+                            76: "76 is the atomic number of osmium.",
+                            77: "77 is the atomic number of iridium.",
+                            78: "78 is the number of cards in a standard Tarot deck.",
+                            79: "79 is the atomic number of gold.",
+                            80: "Around the World in 80 Days is a famous novel by Jules Verne.",
+                            81: "81 is a perfect square (9 x 9).",
+                            82: "82 is the atomic number of lead.",
+                            83: "83 is the atomic number of bismuth.",
+                            84: "84 is the atomic number of polonium.",
+                            85: "85 is the atomic number of astatine.",
+                            86: "86 is the atomic number of radon.",
+                            87: "87 is the atomic number of francium.",
+                            88: "88 is the number of keys on a standard piano.",
+                            89: "89 is the atomic number of actinium.",
+                            90: "90 is the atomic number of thorium.",
+                            91: "91 is the atomic number of protactinium.",
+                            92: "92 is the atomic number of uranium.",
+                            93: "93 is the atomic number of neptunium.",
+                            94: "94 is the atomic number of plutonium.",
+                            95: "95 is the atomic number of americium.",
+                            96: "96 is the atomic number of curium.",
+                            97: "97 is the atomic number of berkelium.",
+                            98: "98 is the atomic number of californium.",
+                            99: "99 is the atomic number of einsteinium.",
+                            100: "100 is the basis for percentage calculations (percent means 'per 100')."
+                        }
+
+                        
+                    # Example usage:
+                    for number in range(1, 101):
+                        print(f"Fact about {number}: {number_fact(first_arg)}")
+
                 elif init_arg == "udo":
                     try:
                         if first_arg == "callme":
@@ -265,6 +376,14 @@ def mainloop():
                     print(Fore.LIGHTGREEN_EX +
                         "  - time: gives the time")
                     print(Fore.LIGHTGREEN_EX +
+                        "  - lock [key]: Locks the terminal.")
+                    print(Fore.LIGHTGREEN_EX +
+                        "  - tnttest [g]: Shows the force of a tnt blast. (radii)")
+                    print(Fore.LIGHTGREEN_EX +
+                        "  - cyoadv: A little choose yout own adventure game.")
+                    print(Fore.LIGHTGREEN_EX +
+                        "  - solve: Makes you solve a math problem.")
+                    print(Fore.LIGHTGREEN_EX +
                         "  - dare [easy|medium|hard|extreme]: Gives a dare.")
                     print(Fore.LIGHTGREEN_EX +
                         "  - notes [see|make] [name] [text]: makes or views notes.")
@@ -285,6 +404,8 @@ def mainloop():
                         "  - help: Displays this help message.")
                     print(Fore.LIGHTGREEN_EX +
                         "  - rand [a] [b]: Picks a random number from a to b.")
+                    print(Fore.LIGHTGREEN_EX +
+                        "  - do [1-100]: Repeats a command n times.")
                     print(Fore.LIGHTGREEN_EX + "  - quit: Exits the program.")
                     print(Fore.LIGHTGREEN_EX +
                         "  - specs: Shows findable system specs.")
