@@ -119,9 +119,13 @@ def mainloop():
 
             if init_arg == "do":
                 try:
+                    
                     iindex = int(first_arg)
+
+                    if iindex > 100:
+                        print(Fore.RED + "🌸 maximas says: too large repitition count!")
                 except Exception as e:
-                    print(e)
+                    print(Fore.RED + f"🌸 maximas says: unexpected error: {e}")
 
             i = 0
             for i in range(iindex):
