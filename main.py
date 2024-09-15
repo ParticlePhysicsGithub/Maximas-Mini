@@ -317,10 +317,17 @@ def mainloop():
                             100: "100 is the basis for percentage calculations (percent means 'per 100')."
                         }
 
+                        return facts[number]
+
                         
-                    # Example usage:
-                    for number in range(1, 101):
-                        print(f"Fact about {number}: {number_fact(first_arg)}")
+                    
+                    try:
+                        print(f"Fact about {first_arg}: {number_fact(int(first_arg))}")
+                    except Exception as e:
+                        print(
+                                Fore.RED +
+                                f"🌸 maximas says: hey, you gave an improper input! (spec: {e}; raised by: eni)"
+                        )
 
                 elif init_arg == "udo":
                     try:
@@ -386,7 +393,9 @@ def mainloop():
                     print(Fore.LIGHTGREEN_EX +
                         "  - dare [easy|medium|hard|extreme]: Gives a dare.")
                     print(Fore.LIGHTGREEN_EX +
-                        "  - notes [see|make] [name] [text]: makes or views notes.")
+                        "  - notes [see|make] [name] [text]: Makes or views notes.")
+                    print(Fore.LIGHTGREEN_EX +
+                        "  - eni [number]: Gives a fact about a number 1-100.")
                     print(Fore.LIGHTGREEN_EX +
                         "  - sortlist [gtrlst|lslst] [nodupli|yesdupli] [numbers]: Sorts a list of numbers.\n"
                         "     * gtrlst: Sorts numbers in ascending order (small to large).\n"
