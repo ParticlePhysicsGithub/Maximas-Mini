@@ -124,6 +124,7 @@ def mainloop():
 
                     if iindex > 100:
                         print(Fore.RED + "🌸 maximas says: too large repitition count!")
+                        iindex = 1
                 except Exception as e:
                     print(Fore.RED + f"🌸 maximas says: unexpected error: {e}")
 
@@ -523,9 +524,9 @@ def mainloop():
                         os.system('clear')
 
                     while icode != first_arg:
-                        icode = input("Maximas is locked. Type the lock key to unlock: ")
+                        icode = input(color_map[currcol] + "Maximas is locked. Type the lock key to unlock: ")
                         if icode != first_arg:
-                            print("Incorrect code.")
+                            print(color_map[currcol] + "Incorrect code.")
 
                     if platform.system() == "Windows":
                         os.system('cls')

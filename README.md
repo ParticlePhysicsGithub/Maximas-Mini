@@ -35,6 +35,12 @@ LOCK
 
 SOLVE
 
+ENI
+
+DO
+
+CYOADV
+
 For 0.0.3...
 ---
 Dash Notation (ex &-sort -g -y 12 3 4)
