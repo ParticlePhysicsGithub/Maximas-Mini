@@ -17,7 +17,7 @@ credits = 10
 user_biotext = "...write your bio..."
 user_defcolor = Fore.WHITE
 
-whitelist = ["quit", "help", "clear", "specs", "time", "solve", "cyoadv"]
+whitelist = ["quit", "help", "clear", "specs", "time", "solve", "cyoadv", "combine"]
 
 color_map = {
     "red": Fore.RED,
@@ -82,7 +82,7 @@ def mainloop():
                     credits = 999999999
                     multip = 1
                 com = input(color_map[currcol] +
-                            f"maximas mini | {username} | > " +
+                            f"maximas mini v0.0.2g 828L | {username} | > " +
                             color_map[currcol])
                 credits -= 1 * multip
                 multip += 1
@@ -329,6 +329,78 @@ def mainloop():
                                 Fore.RED +
                                 f"🌸 maximas says: hey, you gave an improper input! (spec: {e}; raised by: eni)"
                         )
+                elif init_arg == "combine":
+                    # Initial elements and their combinations
+                    elements = ["water", "fire", "earth", "air", "steam", "wind", "lava", "lake", "cloud", "mud", "pressure", "brick", "volcano", "ocean", "hydrothermal vent", "continent", "planet", "sand", "glass", "time", "life", "stone", "plant", "tree"]
+                    combines = {
+                        "steam": ["water", "fire"],
+                        "wind": ["air", "air"],
+                        "lava": ["fire", "earth"],
+                        "cloud": ["steam", "water"],
+                        "lake": ["water", "water"],
+                        "mud": ["water", "earth"],
+                        "pressure": ["steam", "earth"],
+                        "brick": ["mud", "fire"],
+                        "volcano": ["earth", "lava"],
+                        "ocean": ["lake", "lake"],
+                        "hydrothermal vent": ["ocean", "volcano"],
+                        "continent": ["earth", "earth"],
+                        "planet": ["continent", "ocean"],
+                        "sand": ["earth", "wind"],
+                        "glass": ["sand" "fire"],
+                        "time": ["sand", "glass"],
+                        "life": ["time", "hydrothermal vent"],
+                        "stone": ["lava", "water"],
+                        "plant": ["life", "earth"],
+                        "tree": ["plant", "time"]
+
+
+                    }
+
+                    # Available elements initially
+                    avail_elements = ["water", "fire", "earth", "air"]
+
+                    # Function to combine elements
+                    def combine_elements(input_elements):
+                        sorted_input = sorted(input_elements)
+                        for key, value in combines.items():
+                            if sorted_input == sorted(value):
+                                if key not in avail_elements:
+                                    avail_elements.append(key)
+                                return f"combination of {' + '.join(input_elements)} creates {key}."
+                        return "no valid combination found."
+
+                    # Main function to interact with the user
+                    def element_combiner():
+                        print(color_map[currcol] + f"available elements: {', '.join(avail_elements)}")
+                        
+                        while True:
+                            try:
+                                eX = input(color_map[currcol] + "\ngive two elements to combine (or type 'exit' to quit): ").strip().lower()
+                                if eX == "exit":
+                                    break
+                                
+                                eR = eX.split()
+
+                                if len(eR) != 2:
+                                    print("error: please input exactly two elements.")
+                                    continue
+
+                                if eR[0] not in avail_elements or eR[1] not in avail_elements:
+                                    print(f"error: both elements must be from the available list: {', '.join(avail_elements)}")
+                                    continue
+                                
+                                result = combine_elements([eR[0], eR[1]])
+                                print(result)
+
+                                
+                                print(color_map[currcol] + f"updated available elements: {', '.join(avail_elements)}")
+
+                            except Exception as e:
+                                print(f"An error occurred: {e}")
+
+                    
+                    element_combiner()
 
                 elif init_arg == "udo":
                     try:
@@ -388,7 +460,7 @@ def mainloop():
                     print(Fore.LIGHTGREEN_EX +
                         "  - tnttest [g]: Shows the force of a tnt blast. (radii)")
                     print(Fore.LIGHTGREEN_EX +
-                        "  - cyoadv: A little choose yout own adventure game.")
+                        "  - cyoadv: A little choose your own adventure game.")
                     print(Fore.LIGHTGREEN_EX +
                         "  - solve: Makes you solve a math problem.")
                     print(Fore.LIGHTGREEN_EX +
@@ -397,6 +469,8 @@ def mainloop():
                         "  - notes [see|make] [name] [text]: Makes or views notes.")
                     print(Fore.LIGHTGREEN_EX +
                         "  - eni [number]: Gives a fact about a number 1-100.")
+                    print(Fore.LIGHTGREEN_EX +
+                        "  - combine: Starts an element combination game")
                     print(Fore.LIGHTGREEN_EX +
                         "  - sortlist [gtrlst|lslst] [nodupli|yesdupli] [numbers]: Sorts a list of numbers.\n"
                         "     * gtrlst: Sorts numbers in ascending order (small to large).\n"
