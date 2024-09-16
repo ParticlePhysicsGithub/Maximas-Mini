@@ -77,12 +77,12 @@ def mainloop():
 
             try:
                 if nocreds == False:
-                    print(color_map['yellow'] + f"🪙  {credits} ✖️  {multip}")
+                    print(color_map['yellow'] + f"🪙  {credits} {color_map['magenta'] + f'✖️  {multip}'}")
                 else:
                     credits = 999999999
                     multip = 1
                 com = input(color_map[currcol] +
-                            f"maximas mini v0.0.2g 828L | {username} | > " +
+                            f"maximas mini v0.0.3 888L | {datetime.datetime.now().date()} | {username} | > " +
                             color_map[currcol])
                 credits -= 1 * multip
                 multip += 1
@@ -158,8 +158,7 @@ def mainloop():
                         )
                 
 
-                elif init_arg == "time":
-                    print(color_map[currcol] + f"⌚ the time is {str(datetime.datetime.now().time())}")
+                
 
 
                 elif init_arg == "echo":
@@ -331,7 +330,15 @@ def mainloop():
                         )
                 elif init_arg == "combine":
                     # Initial elements and their combinations
-                    elements = ["water", "fire", "earth", "air", "steam", "wind", "lava", "lake", "cloud", "mud", "pressure", "brick", "volcano", "ocean", "hydrothermal vent", "continent", "planet", "sand", "glass", "time", "life", "stone", "plant", "tree"]
+                    elements = [
+                        "water", "fire", "earth", "air", "steam", "wind", "lava", "lake", "cloud", "mud", "pressure", 
+                        "brick", "volcano", "ocean", "hydrothermal vent", "continent", "planet", "sand", "glass", 
+                        "time", "life", "stone", "plant", "tree", "geyser", "desert", "lightning", "storm", "rain", 
+                        "hurricane", "mountain", "cave", "forest", "jungle", "tsunami", "earthquake", "meteor", 
+                        "crystal", "obsidian", "magma", "coral", "reef", "flower", "fruit", "animal", "bird", "fish", 
+                        "reptile", "mammal", "human", "sun", "moon", "star", "galaxy"
+                    ]
+
                     combines = {
                         "steam": ["water", "fire"],
                         "wind": ["air", "air"],
@@ -347,20 +354,48 @@ def mainloop():
                         "continent": ["earth", "earth"],
                         "planet": ["continent", "ocean"],
                         "sand": ["earth", "wind"],
-                        "glass": ["sand" "fire"],
+                        "glass": ["sand", "fire"],
                         "time": ["sand", "glass"],
                         "life": ["time", "hydrothermal vent"],
                         "stone": ["lava", "water"],
                         "plant": ["life", "earth"],
-                        "tree": ["plant", "time"]
-
-
+                        "tree": ["plant", "time"],
+                        "geyser": ["steam", "pressure"],
+                        "desert": ["sand", "wind"],
+                        "lightning": ["air", "fire"],
+                        "storm": ["wind", "cloud"],
+                        "rain": ["cloud", "pressure"],
+                        "hurricane": ["ocean", "storm"],
+                        "mountain": ["earth", "pressure"],
+                        "cave": ["earth", "stone"],
+                        "forest": ["tree", "plant"],
+                        "jungle": ["forest", "rain"],
+                        "tsunami": ["ocean", "earthquake"],
+                        "earthquake": ["earth", "pressure"],
+                        "meteor": ["planet", "fire"],
+                        "crystal": ["pressure", "sand"],
+                        "obsidian": ["lava", "water"],
+                        "magma": ["lava", "pressure"],
+                        "coral": ["plant", "ocean"],
+                        "reef": ["coral", "ocean"],
+                        "flower": ["plant", "time"],
+                        "fruit": ["plant", "life"],
+                        "animal": ["life", "earth"],
+                        "bird": ["air", "animal"],
+                        "fish": ["animal", "water"],
+                        "reptile": ["animal", "fire"],
+                        "mammal": ["animal", "life"],
+                        "human": ["mammal", "time"],
+                        "sun": ["fire", "time"],
+                        "moon": ["planet", "time"],
+                        "star": ["fire", "air"],
+                        "galaxy": ["star", "time"]
                     }
+
 
                     # Available elements initially
                     avail_elements = ["water", "fire", "earth", "air"]
 
-                    # Function to combine elements
                     def combine_elements(input_elements):
                         sorted_input = sorted(input_elements)
                         for key, value in combines.items():
@@ -372,35 +407,38 @@ def mainloop():
 
                     # Main function to interact with the user
                     def element_combiner():
-                        print(color_map[currcol] + f"available elements: {', '.join(avail_elements)}")
+                        print(f"available elements: {', '.join(avail_elements)}")
                         
                         while True:
+                            if sorted(avail_elements) == sorted(elements):
+                                print("congratulations! you've unlocked all elements. you win!")
+                                break
+
                             try:
-                                eX = input(color_map[currcol] + "\ngive two elements to combine (or type 'exit' to quit): ").strip().lower()
+                                eX = input("\ngive two elements to combine (or type 'exit' to quit): ").strip().lower()
                                 if eX == "exit":
                                     break
                                 
                                 eR = eX.split()
 
                                 if len(eR) != 2:
-                                    print("error: please input exactly two elements.")
+                                    print(Fore.RED + "🌸 maximas says: Please input exactly two elements.")
                                     continue
 
                                 if eR[0] not in avail_elements or eR[1] not in avail_elements:
-                                    print(f"error: both elements must be from the available list: {', '.join(avail_elements)}")
+                                    print(Fore.RED +f"🌸 maximas says: both elements must be from the available list: {', '.join(avail_elements)}")
                                     continue
-                                
+
                                 result = combine_elements([eR[0], eR[1]])
                                 print(result)
-
                                 
-                                print(color_map[currcol] + f"updated available elements: {', '.join(avail_elements)}")
+                                print(f"updated available elements: {', '.join(avail_elements)}")
 
                             except Exception as e:
-                                print(f"An error occurred: {e}")
+                                print(Fore.RED +f"🌸 maximas says: an error occurred: {e}")
 
-                    
                     element_combiner()
+
 
                 elif init_arg == "udo":
                     try:
@@ -453,8 +491,7 @@ def mainloop():
                         "  - udo nocreds: Toggles if the credit system is being used.")
                     print(Fore.LIGHTGREEN_EX +
                         "  - invoke [com]: Runs a shell command. Only works in Windows.")
-                    print(Fore.LIGHTGREEN_EX +
-                        "  - time: gives the time")
+                    
                     print(Fore.LIGHTGREEN_EX +
                         "  - lock [key]: Locks the terminal.")
                     print(Fore.LIGHTGREEN_EX +
@@ -514,12 +551,12 @@ def mainloop():
                             print("Invalid choice. Please choose a valid option.")
                             return askuser(storybef1, storybef2, opt, opt2)
 
-                    # Main game logic
+                    
+
                     if askuser("You wake up in a field. Do you go", "or", "right", "left") == "right":
                         if askuser("You go right. You see a car. Do you", "or do you", "take it", "leave it") == "take it":
                             if askuser("You drive on a path for a while, and end up in a city. Do you", "or do you", "continue going", "stop somewhere") == "continue going":
                                 if askuser("You see a building labeled 'erebakatta.' You go inside, where they tell you that you are on the planet Kadai. Do you", "or do you", "stay", "leave") == "stay":
-                                    # You chose to stay on the planet Kadai
                                     if askuser("They offer you a mysterious device that grants you knowledge of the entire planet. Do you", "or do you", "accept it", "decline it") == "accept it":
                                         if askuser("You begin exploring Kadai. Do you first explore the cities or the wilderness?", "or do you", "cities", "wilderness") == "cities":
                                             print("You explore the vast cities of Kadai, learning advanced technology and gaining allies.")
@@ -532,15 +569,23 @@ def mainloop():
                                             print("Eventually, you disappear, your fate unknown to the rest of the world.")
                                             print("ENDING: Lost Wanderer.")
                                     else:
-                                        print("You decline their offer and leave the building. The city is vast, but without guidance, you struggle to find purpose.")
-                                        print("Eventually, you settle into an ordinary life, but a feeling of missed opportunities haunts you.")
-                                        print("ENDING: Ordinary Life.")
+                                        if askuser("They seem disappointed. Do you stay in the city or leave?", "or do you", "stay", "leave") == "stay":
+                                            print("You stay in the city, but without the device, you struggle to find your place.")
+                                            print("Eventually, you settle into an ordinary life, but a feeling of missed opportunities haunts you.")
+                                            print("ENDING: Ordinary Life.")
+                                        else:
+                                            print("You leave the building, but the city is vast and overwhelming. Without guidance, you become lost in the endless maze of streets.")
+                                            print("ENDING: Lost in the City.")
                                 else:
-                                    if askuser("You leave the building, but something seems off. Do you explore the city more or head back to the field? Do you: ", "or do you", "explore", "return") == "explore":
-                                        print("As you wander the city, you start noticing that people are watching you. You confront one of them, only to discover that they’re not human.")
-                                        print("Realizing the danger, you try to flee, but it’s too late. You’ve become a target in a dangerous world.")
-                                        print("You disappear, your fate unknown.")
-                                        print("ENDING: Vanished.")
+                                    if askuser("You leave the building, but something feels off. Do you explore the city or head back to the field?", "or do you", "explore", "return") == "explore":
+                                        if askuser("You explore the city and notice people watching you. Do you confront them or ignore it?", "or do you", "confront", "ignore") == "confront":
+                                            print("You confront one of them and discover they aren’t human. Realizing the danger, you try to escape, but it’s too late.")
+                                            print("You disappear, never to be seen again.")
+                                            print("ENDING: Vanished.")
+                                        else:
+                                            print("You try to ignore the strange behavior, but soon you find yourself being followed everywhere you go.")
+                                            print("Eventually, you are cornered, and the truth is revealed—you were the target all along.")
+                                            print("ENDING: Trapped in Kadai.")
                                     else:
                                         print("You decide to return to the field, but the path back is not as it was. The landscape shifts and warps around you.")
                                         print("Eventually, you find yourself back in the field, as if nothing had happened. Was it all a dream?")
@@ -563,29 +608,44 @@ def mainloop():
                         else:
                             if askuser("You decide not to take the car. As you walk down the road, you find a small village. Do you", "or do you", "enter", "keep walking") == "enter":
                                 if askuser("The villagers are friendly, but there’s something strange about the place. Do you", "or do you", "investigate", "ignore it") == "investigate":
-                                    print("You investigate the village, uncovering dark secrets hidden beneath the surface. The village is part of an experiment.")
-                                    print("Before you can escape, you’re caught and become part of the experiment yourself.")
-                                    print("ENDING: Experiment Subject.")
+                                    if askuser("You uncover dark secrets. Do you confront the villagers or try to escape?", "or do you", "confront", "escape") == "confront":
+                                        print("You confront the villagers and discover they are part of a government experiment. Before you can escape, you are captured and made part of the experiment.")
+                                        print("ENDING: Experiment Subject.")
+                                    else:
+                                        print("You try to escape, but the villagers are watching. You don’t make it far before you are caught.")
+                                        print("ENDING: Captured in the Village.")
                                 else:
                                     print("You decide to ignore your suspicions and stay in the village. Life is peaceful, but you never shake the feeling that something is wrong.")
                                     print("ENDING: Village Life.")
                             else:
-                                print("You keep walking down the road, eventually reaching a new city. But the road was long and you feel like a different person.")
+                                print("You keep walking down the road, eventually reaching a new city. But the road was long, and you feel like a different person.")
                                 print("The adventure changes you, but your journey has just begun.")
                                 print("ENDING: Endless Traveler.")
                     else:
                         if askuser("You turn left and find yourself in a dense forest. Do you", "or do you", "enter the forest", "stay on the road") == "enter the forest":
                             if askuser("You come across an ancient temple. Do you", "or do you", "go inside", "turn back") == "go inside":
-                                print("Inside the temple, you find ancient relics and mysterious writings. You accidentally activate something and find yourself transported to another dimension.")
-                                print("There, your adventure continues in ways you never imagined.")
-                                print("ENDING: Dimensional Wanderer.")
+                                if askuser("Inside, you find a portal. Do you go through it or leave?", "or do you", "go through", "leave") == "go through":
+                                    print("You step through the portal and find yourself in another dimension, where new adventures await.")
+                                    print("ENDING: Dimensional Wanderer.")
+                                else:
+                                    print("You decide not to enter the portal. As you turn back, the forest begins to change, and soon you find yourself lost forever.")
+                                    print("ENDING: Lost in the Forest.")
                             else:
                                 print("You decide not to enter the temple and continue walking. However, strange things begin to happen, as if the forest itself is alive.")
                                 print("Eventually, you are lost forever in the labyrinthine woods.")
                                 print("ENDING: Lost in the Forest.")
                         else:
-                            print("You stay on the road, eventually reaching a new city. Life seems normal again, but the memory of that mysterious field haunts you.")
-                            print("ENDING: Full Circle.")
+                            if askuser("You stay on the road and encounter a mysterious figure. Do you", "or do you", "talk to them", "avoid them") == "talk to them":
+                                if askuser("The figure offers to show you something powerful. Do you accept or refuse?", "or do you", "accept", "refuse") == "accept":
+                                    print("The figure takes you to a hidden location, where they reveal the truth of the world you are in. Your perspective changes forever.")
+                                    print("ENDING: Enlightened Traveler.")
+                                else:
+                                    print("You refuse the offer and continue walking. The figure disappears, and soon the road takes you back to where you began.")
+                                    print("ENDING: Full Circle.")
+                            else:
+                                print("You avoid the figure and continue walking. The road takes you to a new city, but something feels off. The adventure is far from over.")
+                                print("ENDING: Mysterious Journey.")
+
 
 
 
