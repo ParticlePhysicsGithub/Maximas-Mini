@@ -20,7 +20,7 @@ credits = 10
 user_biotext = "...write your bio..."
 user_defcolor = Fore.WHITE
 
-whitelist = ["quit", "help", "clear", "specs", "time", "solve", "cyoadv", "combine", "screensaver"]
+whitelist = ["quit", "help", "clear", "specs", "time", "solve", "cyoadv", "combine", "screensaver", "stopwatch"]
 
 color_map = {
     "red": Fore.RED,
@@ -43,6 +43,9 @@ color_map = {
 
 def mainloop():
     global username, temp_sysraise, currcol, whitelist, credits, user_biotext, user_defcolor
+
+    init_time = time.time()
+
     com = ""
 
     iindex = 1
@@ -71,6 +74,8 @@ def mainloop():
 
     while com != "quit":
 
+        
+
         if username == "morecreditsplease" and ee_mcp_n == 0:
 
             credits += 99999999
@@ -84,8 +89,12 @@ def mainloop():
                 else:
                     credits = 999999999
                     multip = 1
+                elapsed_time = time.time() - init_time
+                hours, remainder = divmod(elapsed_time, 3600)
+                minutes, seconds = divmod(remainder, 60)
+                time_str = f"{int(hours):02}:{int(minutes):02}:{int(seconds):02}"
                 com = input(color_map[currcol] +
-                            f"maximas mini v0.0.3c 957L | {datetime.datetime.now().date()} | {username} | > " +
+                            f"maximas mini v0.0.3d 1019L | init was {time_str} ago | {datetime.datetime.now().date()} | {username} | > " +
                             color_map[currcol])
                 credits -= 1 * multip
                 multip += 1
@@ -120,6 +129,7 @@ def mainloop():
                     f"🌸 maximas says: hey, you gave an improper input! (spec: no args given; raised by: {com})"
                 )
 
+            
             if init_arg == "do":
                 try:
                     
@@ -139,7 +149,53 @@ def mainloop():
                 if temp_sysraise == 1:
                     temp_sysraise = 0
                     continue
+                elif init_arg == "stopwatch":
+                    def stopwatch():
+                        try:
+                            print("Press 'Tab' to stop the stopwatch.")
+                            start_time = time.time()
+                            while True:
+                                elapsed_time = time.time() - start_time
+                                hours, remainder = divmod(elapsed_time, 3600)
+                                minutes, seconds = divmod(remainder, 60)
+                                time_str = f"{int(hours):02}:{int(minutes):02}:{int(seconds):02}"
+                                print(f"\r{time_str}", end='')
+                                
+                                if keyboard.is_pressed('tab'):
+                                    print("\nStopwatch stopped.")
+                                    break
+                                
+                                time.sleep(0.1)  # Sleep to reduce CPU usage
 
+                        except Exception as e:
+                            print(color_map['red'] + f"🌸 maximas says: unexpected error as {e}")
+
+                    stopwatch()
+                elif init_arg == "tz":
+                    import pytz
+
+                    if first_arg == "list":
+                        print(pytz.all_timezones)
+                        continue
+
+                    def get_local_time():
+                        # Prompt user to enter their timezone
+                        timezone_str = ' '.join(firstelse_args)
+                        
+                        try:
+                            # Get the timezone object
+                            timezone = pytz.timezone(timezone_str)
+                        except pytz.UnknownTimeZoneError:
+                            print("Unknown timezone. Please make sure you entered a valid timezone.")
+                            return
+
+                        # Get the current time in UTC and convert to the specified timezone
+                        utc_now = datetime.datetime.now().replace(tzinfo=pytz.utc)
+                        local_time = utc_now.astimezone(timezone)
+                        
+                        # Print the local time in a readable format
+                        print("Current local time in {}: {}".format(timezone_str, local_time.strftime('%Y-%m-%d %H:%M:%S')))
+                    get_local_time()
                 elif init_arg == "mon":
                     try:
                         c = random.randint(1, 3)
@@ -164,10 +220,12 @@ def mainloop():
                 
                 elif init_arg == "screensaver":
                     import os
+                    print("press tab to stop")
+                    time.sleep(1)
                     try:
                         timei = 100000
                         total_time = timei
-
+                        
                         if platform.system() == "Windows":
                             os.system('cls')
                         else:
@@ -568,6 +626,8 @@ def mainloop():
                     print(Fore.LIGHTGREEN_EX +
                         "  - solve: Makes you solve a math problem.")
                     print(Fore.LIGHTGREEN_EX +
+                        "  - stopwatch: Starts a stopwatch.")
+                    print(Fore.LIGHTGREEN_EX +
                         "  - dare [easy|medium|hard|extreme]: Gives a dare.")
                     print(Fore.LIGHTGREEN_EX +
                         "  - notes [see|make] [name] [text]: Makes or views notes.")
@@ -575,6 +635,8 @@ def mainloop():
                         "  - eni [number]: Gives a fact about a number 1-100.")
                     print(Fore.LIGHTGREEN_EX +
                         "  - combine: Starts an element combination game")
+                    print(Fore.LIGHTGREEN_EX +
+                        "  - tz [timezone, like Etc/GMT-3 is GMT-1 (because pytz is weird) or list (lists all timezones)]: Gives the time at the given timezone.")
                     print(Fore.LIGHTGREEN_EX +
                         "  - load [time]: Starts a timer that locks the terminal for the input time.")
                     print(Fore.LIGHTGREEN_EX +
