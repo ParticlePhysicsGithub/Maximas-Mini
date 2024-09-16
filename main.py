@@ -6,6 +6,8 @@ import subprocess
 import random
 import statistics
 import datetime
+import time
+import sys
 
 colorama.init(autoreset=True)
 
@@ -82,7 +84,7 @@ def mainloop():
                     credits = 999999999
                     multip = 1
                 com = input(color_map[currcol] +
-                            f"maximas mini v0.0.3 888L | {datetime.datetime.now().date()} | {username} | > " +
+                            f"maximas mini v0.0.3b 928L | {datetime.datetime.now().date()} | {username} | > " +
                             color_map[currcol])
                 credits -= 1 * multip
                 multip += 1
@@ -159,6 +161,40 @@ def mainloop():
                 
 
                 
+
+                elif init_arg == "load":
+                    xx = random.choice(list(color_map.keys()))
+                    def print_progress_bar(i, timei, xx):
+                        # Calculate block counts
+                        total_blocks = 120
+                        progress_blocks = round((i / timei) * total_blocks)
+                        remaining_blocks = total_blocks - progress_blocks
+
+                        # Construct the progress bar
+                        bar = (
+                            f"{Fore.BLACK + '█'}"
+                            f"{color_map[xx] + ('█' * progress_blocks)}"
+                            f"{Fore.WHITE + ('█' * remaining_blocks)}"
+                            f"{Fore.BLACK + '█'}"
+                        )
+                        
+                        # Print progress bar and remaining time on the same line
+                        sys.stdout.write(f"\r{bar} {timei - i} ms remaining")
+                        sys.stdout.flush()
+
+                    try:
+                        timei = int(first_arg)
+
+                        total_time = timei  
+                        for elapsed_time in range(0, total_time + 1):
+                            print_progress_bar(elapsed_time, total_time, xx)
+                            time.sleep(0.001)  
+                        
+                        # Print final state after the loop ends
+                        print(f"\r{Fore.BLACK + '█' * 120} {Fore.GREEN + 'Complete!                   '}")
+
+                    except Exception as e:
+                        print(Fore.RED + f"🌸 maximas says: unexpected error as {e}")
 
 
                 elif init_arg == "echo":
@@ -332,7 +368,7 @@ def mainloop():
                     # Initial elements and their combinations
                     elements = [
                         "water", "fire", "earth", "air", "steam", "wind", "lava", "lake", "cloud", "mud", "pressure", 
-                        "brick", "volcano", "ocean", "hydrothermal vent", "continent", "planet", "sand", "glass", 
+                        "brick", "volcano", "ocean", "hydrothermal-vent", "continent", "planet", "sand", "glass", 
                         "time", "life", "stone", "plant", "tree", "geyser", "desert", "lightning", "storm", "rain", 
                         "hurricane", "mountain", "cave", "forest", "jungle", "tsunami", "earthquake", "meteor", 
                         "crystal", "obsidian", "magma", "coral", "reef", "flower", "fruit", "animal", "bird", "fish", 
@@ -350,13 +386,13 @@ def mainloop():
                         "brick": ["mud", "fire"],
                         "volcano": ["earth", "lava"],
                         "ocean": ["lake", "lake"],
-                        "hydrothermal vent": ["ocean", "volcano"],
+                        "hydrothermal-vent": ["ocean", "volcano"],
                         "continent": ["earth", "earth"],
                         "planet": ["continent", "ocean"],
                         "sand": ["earth", "wind"],
                         "glass": ["sand", "fire"],
                         "time": ["sand", "glass"],
-                        "life": ["time", "hydrothermal vent"],
+                        "life": ["time", "hydrothermal-vent"],
                         "stone": ["lava", "water"],
                         "plant": ["life", "earth"],
                         "tree": ["plant", "time"],
@@ -386,9 +422,9 @@ def mainloop():
                         "reptile": ["animal", "fire"],
                         "mammal": ["animal", "life"],
                         "human": ["mammal", "time"],
-                        "sun": ["fire", "time"],
-                        "moon": ["planet", "time"],
-                        "star": ["fire", "air"],
+                        "sun": ["star", "planet"],
+                        "moon": ["planet", "meteor"],
+                        "star": ["lava", "lava"],
                         "galaxy": ["star", "time"]
                     }
 
@@ -508,6 +544,8 @@ def mainloop():
                         "  - eni [number]: Gives a fact about a number 1-100.")
                     print(Fore.LIGHTGREEN_EX +
                         "  - combine: Starts an element combination game")
+                    print(Fore.LIGHTGREEN_EX +
+                        "  - load [time]: Starts a timer that locks the terminal for the input time.")
                     print(Fore.LIGHTGREEN_EX +
                         "  - sortlist [gtrlst|lslst] [nodupli|yesdupli] [numbers]: Sorts a list of numbers.\n"
                         "     * gtrlst: Sorts numbers in ascending order (small to large).\n"
