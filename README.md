@@ -1,7 +1,7 @@
 # Maximas-Mini
 
 A mini terminal with a bunch of features to come.
-As of 0.0.2c:
+As of 0.0.3:
 ---
 Credit System (MON)
 
@@ -23,8 +23,6 @@ QUIT
 
 SORTLIST
 
-TIME
-
 NOTES
 
 DARE
@@ -41,7 +39,9 @@ DO
 
 CYOADV
 
-For 0.0.3...
+COMBINE
+
+For 0.0.4...
 ---
 Dash Notation (ex &-sort -g -y 12 3 4)
 
