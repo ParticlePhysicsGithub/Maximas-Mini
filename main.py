@@ -8,6 +8,7 @@ import statistics
 import datetime
 import time
 import sys
+import keyboard
 
 colorama.init(autoreset=True)
 
@@ -19,7 +20,7 @@ credits = 10
 user_biotext = "...write your bio..."
 user_defcolor = Fore.WHITE
 
-whitelist = ["quit", "help", "clear", "specs", "time", "solve", "cyoadv", "combine"]
+whitelist = ["quit", "help", "clear", "specs", "time", "solve", "cyoadv", "combine", "screensaver"]
 
 color_map = {
     "red": Fore.RED,
@@ -84,7 +85,7 @@ def mainloop():
                     credits = 999999999
                     multip = 1
                 com = input(color_map[currcol] +
-                            f"maximas mini v0.0.3b 928L | {datetime.datetime.now().date()} | {username} | > " +
+                            f"maximas mini v0.0.3c 957L | {datetime.datetime.now().date()} | {username} | > " +
                             color_map[currcol])
                 credits -= 1 * multip
                 multip += 1
@@ -161,7 +162,37 @@ def mainloop():
                 
 
                 
+                elif init_arg == "screensaver":
+                    import os
+                    try:
+                        timei = 100000
+                        total_time = timei
 
+                        if platform.system() == "Windows":
+                            os.system('cls')
+                        else:
+                            os.system('clear')
+                        
+                        txt = color_map[random.choice(['red', 'green','yellow', 'blue', 'magenta', "cyan", 'lightred', 'lightgreen','lightyellow', 'lightblue', 'lightmagenta', "lightcyan"])] + "█"
+                        
+                        start_time = time.time()
+                        elapsed_time = 0
+                        
+                        while elapsed_time <= total_time:
+                            if keyboard.is_pressed('tab'):  # Check if Enter key is pressed
+                                print("Stopping...")
+                                break
+                            
+                            
+
+                            txt += color_map[random.choice(['red', 'green','yellow', 'blue', 'magenta', "cyan", 'lightred', 'lightgreen','lightyellow', 'lightblue', 'lightmagenta', "lightcyan"])] + "█"
+                            print(txt)
+                            time.sleep(0.001)
+                            
+                            elapsed_time = time.time() - start_time
+
+                    except Exception as e:
+                        print(color_map['red'] + f"🌸 maximas says: unexpected error as {e}")
                 elif init_arg == "load":
                     xx = random.choice(list(color_map.keys()))
                     def print_progress_bar(i, timei, xx):
