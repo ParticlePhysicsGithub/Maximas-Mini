@@ -9,6 +9,7 @@ import datetime
 import time
 import sys
 import keyboard
+import os
 
 colorama.init(autoreset=True)
 
@@ -218,7 +219,7 @@ def mainloop():
 
                 
                 elif init_arg == "screensaver":
-                    import os
+                    
                     print("press tab to stop")
                     time.sleep(1)
                     try:
@@ -253,6 +254,7 @@ def mainloop():
                 elif init_arg == "load":
                     xx = random.choice(list(color_map.keys()))
                     def print_progress_bar(i, timei, xx):
+                        import os
                         # Calculate block counts
                         total_blocks = 120
                         progress_blocks = round((i / timei) * total_blocks)
@@ -267,6 +269,7 @@ def mainloop():
                         )
                         
                         # Print progress bar and remaining time on the same line
+                        
                         sys.stdout.write(f"\r{bar} {timei - i} ms remaining")
                         sys.stdout.flush()
 
