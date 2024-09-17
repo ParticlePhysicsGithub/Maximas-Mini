@@ -174,28 +174,27 @@ def mainloop():
                 elif init_arg == "tz":
                     import pytz
 
-                    if first_arg == "list":
-                        print(pytz.all_timezones)
-                        continue
-
-                    def get_local_time():
-                        # Prompt user to enter their timezone
-                        timezone_str = ' '.join(firstelse_args)
-                        
+                    def get_local_time(offset):
                         try:
-                            # Get the timezone object
-                            timezone = pytz.timezone(timezone_str)
-                        except pytz.UnknownTimeZoneError:
-                            print("Unknown timezone. Please make sure you entered a valid timezone.")
-                            return
-
-                        # Get the current time in UTC and convert to the specified timezone
-                        utc_now = datetime.datetime.now().replace(tzinfo=pytz.utc)
-                        local_time = utc_now.astimezone(timezone)
+                            # Calculate the offset in minutes
+                            offset_minutes = offset * 60
+                            
+                            # Create a fixed offset timezone
+                            timezone = pytz.FixedOffset(offset_minutes)
+                            
+                            # Get the current time in UTC and convert to the specified timezone
+                            utc_now = datetime.datetime.now(pytz.utc)
+                            local_time = utc_now.astimezone(timezone)
+                            
+                            # Print the local time in a readable format
+                            print("Current local time for GMT offset {}: {}".format(offset, local_time.strftime('%Y-%m-%d %H:%M:%S')))
                         
-                        # Print the local time in a readable format
-                        print("Current local time in {}: {}".format(timezone_str, local_time.strftime('%Y-%m-%d %H:%M:%S')))
-                    get_local_time()
+                        except Exception as e:
+                            print(f"Error: {e}")
+
+                    # Example usage
+                    offset = int(first_arg)
+                    get_local_time(offset)
                 elif init_arg == "mon":
                     try:
                         c = random.randint(1, 3)
